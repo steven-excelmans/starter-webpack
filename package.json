@@ -10,6 +10,7 @@
   },
   "keywords": [
     "alpine.js",
+    "sass",
     "tailwindcss",
     "typescript",
     "webpack"
@@ -18,11 +19,15 @@
   "license": "MIT",
   "devDependencies": {
     "@types/alpinejs": "^3.7.0",
+    "autoprefixer": "^10.4.7",
     "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.1",
     "postcss": "^8.4.14",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.7.2",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.1.6",
     "ts-loader": "^9.3.1",

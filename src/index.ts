@@ -1,4 +1,4 @@
-import './css/styles.css';
+import './css/styles.scss';
 
 //Alpine.js
 import Alpine from 'alpinejs';

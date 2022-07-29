@@ -1,16 +1,25 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {BundleAnalyzerPlugin: WebpackBundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+
+const DEV = 'development';
+const PRD = 'production';
 
 let config = {
     entry: ['./src/index'],
-    mode: 'development',
+    mode: DEV,
     module: {
         rules: [
             {
                 test: /\.ts$/i,
                 exclude: /node_modules/,
                 use: 'ts-loader'
+            },
+            {
+                test: /\.html$/i,
+                exclude: /node_modules/,
+                use: 'html-loader'
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -21,6 +30,18 @@ let config = {
                     'postcss-loader',
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 10 * 1024,
+                    }
+                },
+                generator: {
+                    filename: "images/[hash][name][ext]"
+                }
             }
         ]
     },
@@ -34,7 +55,7 @@ let config = {
     },
     plugins: [
         new HtmlWebpackPlugin({template: './src/index.html'}),
-        new MiniCssExtractPlugin({filename: 'styles.css'})
+        new MiniCssExtractPlugin({filename: 'styles.css'}),
     ],
     devServer: {
         open: true,
@@ -45,8 +66,15 @@ let config = {
 }
 
 module.exports = (env, args) => {
-    if (args.mode === 'development') {
+    if (args.mode === DEV) {
         config.devtool = 'source-map'
+    }
+
+    if (args.mode === PRD) {
+        config.plugins = [
+            ...config.plugins,
+            new WebpackBundleAnalyzerPlugin()
+        ]
     }
 
     return config;
